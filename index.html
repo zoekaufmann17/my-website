@@ -106,12 +106,16 @@
       border-radius: 50%;
       margin: 0 auto 1.5rem;
       border: 3px solid var(--color-primary);
+      overflow: hidden;
       background: radial-gradient(circle at 30% 25%, #ffffff, var(--color-secondary));
-      display: grid;
-      place-items: center;
-      color: #7f6a5f;
-      font-weight: 600;
-      font-size: 0.86rem;
+      box-shadow: 0 10px 30px #00000014;
+    }
+
+    .headshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .button-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
@@ -310,6 +314,10 @@
   <!-- EDIT THIS SECTION -->
   <section id="hero">
     <div class="container">
+      <!-- EDIT THIS SECTION: Replace the src value if you rename your headshot file -->
+      <div class="headshot">
+        <img src="headshot.jpg" alt="Headshot of Zoe Kaufmann" />
+      </div>
       <div class="headshot">Headshot<br/>Placeholder</div>
       <h1>Zoe Kaufmann</h1>
       <p class="tagline">Aspiring Marketing Professional.</p>
@@ -496,7 +504,7 @@
     <div class="container">
       <h2>Contact</h2>
       <div class="contact-card">
-        <p><strong>Email:</strong> Please add your exact resume email here</p>
+        <p><strong>Email:</strong> <a href="mailto:zkaufmann@tulane.edu">zkaufmann@tulane.edu</a></p>
         <p>
           <a class="btn btn-primary" href="https://linkedin.com/in/zoe-kaufmann/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
         </p>
