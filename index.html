@@ -118,6 +118,17 @@
       display: block;
     }
 
+    .headshot-fallback {
+      width: 100%;
+      height: 100%;
+      display: none;
+      place-items: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #7f6a5f;
+      background: radial-gradient(circle at 30% 25%, #ffffff, var(--color-secondary));
+    }
+
     .button-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
 
     .btn {
@@ -316,7 +327,8 @@
     <div class="container">
       <!-- EDIT THIS SECTION: Replace the src value if you rename your headshot file -->
       <div class="headshot">
-        <img src="Headshot.png" alt="Headshot of Zoe Kaufmann" />
+        <img id="headshotImage" src="./Headshot.png" alt="Headshot of Zoe Kaufmann" />
+        <span id="headshotFallback" class="headshot-fallback" aria-hidden="true">ZK</span>
       </div>
       <h1>Zoe Kaufmann</h1>
       <p class="tagline">Aspiring Marketing Professional.</p>
@@ -541,6 +553,32 @@
 
     const backToTop = document.getElementById('backToTop');
     const hero = document.getElementById('hero');
+    const headshotImage = document.getElementById('headshotImage');
+    const headshotFallback = document.getElementById('headshotFallback');
+    const headshotCandidates = [
+      './Headshot.png',
+      'Headshot.png',
+      './headshot.png',
+      'headshot.png',
+      './Headshot.JPG',
+      './Headshot.jpeg'
+    ];
+    let headshotIndex = 0;
+
+    headshotImage.addEventListener('load', () => {
+      headshotImage.style.display = 'block';
+      headshotFallback.style.display = 'none';
+    });
+
+    headshotImage.addEventListener('error', () => {
+      headshotIndex += 1;
+      if (headshotIndex < headshotCandidates.length) {
+        headshotImage.src = headshotCandidates[headshotIndex];
+        return;
+      }
+      headshotImage.style.display = 'none';
+      headshotFallback.style.display = 'grid';
+    });
 
     window.addEventListener('scroll', () => {
       const show = window.scrollY > hero.offsetHeight * 0.75;
