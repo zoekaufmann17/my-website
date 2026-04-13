@@ -22,7 +22,9 @@
       margin: 0;
       font-family: Inter, sans-serif;
       color: var(--color-text);
-      background: var(--color-background);
+      background: linear-gradient(120deg, #fff8f2, #fffdf8, #f6fff8, #f5f7ff);
+      background-size: 300% 300%;
+      animation: pastelShift 18s ease infinite;
       line-height: 1.6;
     }
 
@@ -82,12 +84,12 @@
     }
 
     #hero { min-height: 90vh; display: grid; place-items: center; text-align: center; }
-    #about { background: linear-gradient(to bottom, #fff8f4, var(--color-background)); }
-    #experience { background: linear-gradient(to bottom, var(--color-background), #fffaf6); }
-    #education { background: linear-gradient(to bottom, #fffaf6, var(--color-background)); }
-    #projects { background: linear-gradient(to bottom, var(--color-background), #fff6f0); }
-    #skills { background: linear-gradient(to bottom, #fff6f0, var(--color-background)); }
-    #contact { background: linear-gradient(to bottom, var(--color-background), #fff8f4); }
+    #about { background: linear-gradient(to bottom, #fff6f2cc, #fffaf7cc); }
+    #experience { background: linear-gradient(to bottom, #fef9ffcc, #fff8f2cc); }
+    #education { background: linear-gradient(to bottom, #f5fbffcc, #fffaf5cc); }
+    #projects { background: linear-gradient(to bottom, #fff6f9cc, #f6fff9cc); }
+    #skills { background: linear-gradient(to bottom, #f7f5ffcc, #fff8f2cc); }
+    #contact { background: linear-gradient(to bottom, #f6fffacc, #fff6f2cc); }
 
     h1, h2, h3 {
       font-family: 'Playfair Display', serif;
@@ -101,6 +103,22 @@
     .tagline { font-size: clamp(1rem, 2.3vw, 1.25rem); margin-bottom: 1.8rem; }
 
     .button-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+    .hero-scroll-prompt {
+      margin-top: 1.8rem;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      color: var(--color-accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .hero-scroll-prompt .arrow {
+      font-size: 1.35rem;
+      line-height: 1;
+      animation: bounceArrow 1.7s ease infinite;
+    }
 
     .btn {
       display: inline-flex;
@@ -271,6 +289,17 @@
 
     .back-to-top.show { display: inline-grid; place-items: center; }
 
+    @keyframes bounceArrow {
+      0%, 100% { transform: translateY(0); opacity: 0.75; }
+      50% { transform: translateY(7px); opacity: 1; }
+    }
+
+    @keyframes pastelShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     @media (max-width: 740px) {
       .nav-inner { flex-direction: column; align-items: flex-start; padding: 0.7rem 0; }
       .nav-links { gap: 0.7rem; }
@@ -302,6 +331,10 @@
         <a class="btn btn-primary" href="#projects">View My Work</a>
         <a class="btn btn-outline" href="https://github.com/zoekaufmann17/my-website/blob/main/Zoe%20Kaufmann%20Resume.pdf" target="_blank" rel="noopener noreferrer">Download Resume</a>
       </div>
+      <a class="hero-scroll-prompt" href="#about" aria-label="Scroll down to About section">
+        <span>Scroll Down</span>
+        <span class="arrow">↓</span>
+      </a>
     </div>
   </section>
 
