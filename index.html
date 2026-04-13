@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zoe Kaufmann | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-primary: #c9896d; /* Primary brand color used for main buttons and highlights */
+      --color-secondary: #f2ddd2; /* Secondary color used for cards, subtle surfaces, and chips */
+      --color-background: #fdfaf7; /* Main page background color */
+      --color-text: #2f2a27; /* Default text color used across all sections */
+      --color-accent: #7e9c89; /* Accent color used for links, timeline markers, and emphasis */
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, sans-serif;
+      color: var(--color-text);
+      background: var(--color-background);
+      line-height: 1.6;
+      --bg-shift: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -12% -10%;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 22%, #ffd9cc99 0%, transparent 48%),
+        radial-gradient(circle at 84% 16%, #dcd5ff99 0%, transparent 45%),
+        radial-gradient(circle at 78% 74%, #c8f1dc99 0%, transparent 48%),
+        radial-gradient(circle at 18% 80%, #ffe8be99 0%, transparent 42%);
+      filter: blur(6px);
+      transform: translateY(calc(var(--bg-shift) * -70px));
+      transition: transform 120ms linear;
+    }
+
+    .container { width: min(1080px, 92%); margin: 0 auto; }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+      background: color-mix(in srgb, var(--color-background) 88%, white);
+      border-bottom: 1px solid #00000014;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 72px;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      color: var(--color-text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover { color: var(--color-primary); }
+
+    section {
+      padding: 5.5rem 0;
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 650ms ease, transform 650ms ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #hero { min-height: 90vh; display: grid; place-items: center; }
+    #about { background: linear-gradient(to bottom, #fff6f2cc, #fffaf7cc); }
+    #experience { background: linear-gradient(to bottom, #fef9ffcc, #fff8f2cc); }
+    #education { background: linear-gradient(to bottom, #f5fbffcc, #fffaf5cc); }
+    #projects { background: linear-gradient(to bottom, #fff6f9cc, #f6fff9cc); }
+    #skills { background: linear-gradient(to bottom, #f7f5ffcc, #fff8f2cc); }
+    #contact { background: linear-gradient(to bottom, #f6fffacc, #fff6f2cc); }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      margin-top: 0;
+      line-height: 1.2;
+    }
+
+    h1 { font-size: clamp(2.35rem, 6vw, 4.25rem); margin-bottom: 0.4rem; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 1.1rem; }
+
+    .tagline { font-size: clamp(1rem, 2.3vw, 1.25rem); margin-bottom: 1.8rem; }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-copy {
+      text-align: left;
+    }
+
+    .hero-photo {
+      width: min(360px, 100%);
+      aspect-ratio: 4 / 5;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 3px solid color-mix(in srgb, var(--color-primary) 65%, white);
+      box-shadow: 0 18px 35px #0000001f;
+      justify-self: end;
+      background: linear-gradient(145deg, #ffe8dc, #f8efe6);
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .button-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+    .hero-copy .button-row { justify-content: flex-start; }
+    .hero-scroll-prompt {
+      margin-top: 1.8rem;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      color: var(--color-accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .hero-scroll-prompt .arrow {
+      font-size: 1.35rem;
+      line-height: 1;
+      animation: bounceArrow 1.7s ease infinite;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.2rem;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 2px solid transparent;
+      font-weight: 600;
+      transition: 180ms ease;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); filter: brightness(0.95); }
+
+    .btn-outline {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .about-text {
+      max-width: 760px;
+      font-size: 1.04rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .badge {
+      background: var(--color-secondary);
+      color: #4d3f39;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    .timeline {
+      position: relative;
+      margin-left: 0.6rem;
+      padding-left: 1.4rem;
+      border-left: 2px solid color-mix(in srgb, var(--color-accent) 60%, white);
+      display: grid;
+      gap: 1.1rem;
+    }
+
+    .timeline-item {
+      position: relative;
+      background: white;
+      border: 1px solid #00000010;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.95rem;
+      top: 1.1rem;
+      width: 12px;
+      height: 12px;
+      background: var(--color-accent);
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    .role-head { margin-bottom: 0.45rem; }
+    .role-title { font-weight: 700; }
+    .role-meta { color: #6d6059; font-size: 0.9rem; }
+
+    ul { margin: 0.45rem 0 0; padding-left: 1.1rem; }
+
+    .education-card,
+    .contact-card {
+      background: white;
+      border: 1px solid #00000012;
+      border-radius: 14px;
+      padding: 1.2rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .project-card {
+      background: white;
+      border: 1px solid #00000012;
+      border-radius: 14px;
+      padding: 1rem;
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-group {
+      background: white;
+      border: 1px solid #00000012;
+      border-radius: 14px;
+      padding: 1rem;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-item {
+      background: color-mix(in srgb, var(--color-secondary) 80%, white);
+      border-radius: 999px;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.87rem;
+    }
+
+    .project-links details { margin-top: 0.45rem; }
+    .project-links summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--color-primary);
+      list-style: none;
+    }
+
+    .project-links summary::-webkit-details-marker { display: none; }
+    .project-links ul { margin-top: 0.5rem; }
+    .project-links a { color: var(--color-accent); text-decoration: none; }
+    .project-links a:hover { text-decoration: underline; }
+
+    .contact-card { text-align: center; }
+
+    .back-to-top {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 999;
+      border: none;
+      background: var(--color-primary);
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: none;
+      box-shadow: 0 8px 20px #0000001a;
+    }
+
+    .back-to-top.show { display: inline-grid; place-items: center; }
+
+    @keyframes bounceArrow {
+      0%, 100% { transform: translateY(0); opacity: 0.75; }
+      50% { transform: translateY(7px); opacity: 1; }
+    }
+
+    @media (max-width: 740px) {
+      .nav-inner { flex-direction: column; align-items: flex-start; padding: 0.7rem 0; }
+      .nav-links { gap: 0.7rem; }
+      section { padding: 4.2rem 0; }
+      .hero-layout { grid-template-columns: 1fr; }
+      .hero-copy { text-align: center; }
+      .hero-copy .button-row { justify-content: center; }
+      .hero-photo { justify-self: center; max-width: 310px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="#hero" class="brand">Zoe Kaufmann</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- EDIT THIS SECTION -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <h1>Zoe Kaufmann</h1>
+          <p class="tagline">Graduating Business Student & Aspiring Marketing Professional.</p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="#projects">View My Work</a>
+            <a class="btn btn-outline" href="https://github.com/zoekaufmann17/my-website/blob/main/Zoe%20Kaufmann%20Resume.pdf" target="_blank" rel="noopener noreferrer">Download Resume</a>
+          </div>
+        </div>
+        <!-- EDIT THIS SECTION: Replace image source if your headshot filename/path changes -->
+        <div class="hero-photo">
+          <img src="Headshot.png" alt="Headshot of Zoe Kaufmann" />
+        </div>
+      </div>
+      <a class="hero-scroll-prompt" href="#about" aria-label="Scroll down to About section">
+        <span>Scroll Down</span>
+        <span class="arrow">↓</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- EDIT THIS SECTION -->
+  <section id="about">
+    <div class="container">
+      <h2>About Me</h2>
+      <p class="about-text">
+        I’m Zoe Kaufmann, a student at Tulane University’s A. B. Freeman School of Business and an aspiring marketing professional focused on thoughtful brand growth. I’m especially excited by launch strategy, content-led storytelling, and consumer insight work that turns strong creative ideas into measurable campaign outcomes. My experience at Son of Noise and in hands-on launch projects has shaped a detail-oriented, collaborative working style that I bring into every team and deliverable.
+      </p>
+      <p class="about-text">
+        Beyond classes and internships, I stay active in organizations like Phi Chi Theta and the American Marketing Association, and I enjoy building campaigns that feel both culturally relevant and genuinely human. I care deeply about communication, follow-through, and making ideas clear and actionable from kickoff through execution.
+      </p>
+      <div class="badges">
+        <span class="badge">Tulane University</span>
+        <span class="badge">Marketing + Management</span>
+        <span class="badge">A. B. Freeman School of Business</span>
+        <span class="badge">Product Launch Enthusiast</span>
+        <span class="badge">Storytelling</span>
+        <span class="badge">Consumer Insights</span>
+        <span class="badge">Team Collaboration</span>
+        <span class="badge">Creative Strategy</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDIT THIS SECTION -->
+  <section id="experience">
+    <div class="container">
+      <h2>Experience</h2>
+      <div class="timeline">
+        <!-- EDIT THIS SECTION: Experience Entry 1 -->
+        <article class="timeline-item">
+          <div class="role-head">
+            <div class="role-title">SON OF NOISE - Integrated Marketing Agency · Remote</div>
+            <div class="role-meta">Influencer Marketing Intern · September 2025 - Present</div>
+          </div>
+          <ul>
+            <li>Sourced 349 influencer invites for by/ rosie jane’s Sephora fragrance launch in Los Angeles, driving 986,000+ impressions across TikTok and Instagram and $281,094 in earned media value.</li>
+            <li>Planned and supported the execution of a high-traffic Miami pop-up activation for SET Active, attracting 900+ visitors and generating $160,000+ in sales over two days.</li>
+            <li>Scout influencers for paid and organic affiliate campaigns across ShopMy and LTK, aligning creator voice with brand identity and SEO-driven strategies.</li>
+            <li>Create social media content for a custom vintage denim brand with 277k followers on Instagram, curating posts and stories consistent with the brand’s visual storytelling.</li>
+          </ul>
+        </article>
+
+        <!-- EDIT THIS SECTION: Experience Entry 2 -->
+        <article class="timeline-item">
+          <div class="role-head">
+            <div class="role-title">MAZZ NYC, INC. · New York, NY</div>
+            <div class="role-meta">Wholesale Sales Intern · June 2025 - August 2025</div>
+          </div>
+          <ul>
+            <li>Spearheaded design of trade show materials and led visual merchandising for Atlanta Market and Shoppe Object.</li>
+            <li>Expanded U.S. buyer network by 3000+ new wholesale leads through competitor research and strategic outreach.</li>
+            <li>Managed end-to-end wholesale operations, including inventory ordering, sample logistics, and CRM across accounts.</li>
+          </ul>
+        </article>
+
+        <!-- EDIT THIS SECTION: Experience Entry 3 -->
+        <article class="timeline-item">
+          <div class="role-head">
+            <div class="role-title">CREATIVE MEDIA MARKETING, CMM · Remote</div>
+            <div class="role-meta">Public Relations Intern · January 2025 - May 2025</div>
+          </div>
+          <ul>
+            <li>Monitored earned media placements for premium clients like La Roche-Posay and Biologique Recherche.</li>
+            <li>Tracked 85B+ impressions across digital channels to measure ROI, brand visibility, and campaign effectiveness.</li>
+            <li>Developed targeted media pitches and influencer strategies aligned with emerging trends for Dial and Snuggle.</li>
+          </ul>
+        </article>
+
+        <!-- EDIT THIS SECTION: Experience Entry 4 -->
+        <article class="timeline-item">
+          <div class="role-head">
+            <div class="role-title">SKIMS · Washington, DC</div>
+            <div class="role-meta">Team Member · May 2024 - August 2024</div>
+          </div>
+          <ul>
+            <li>Pioneered community relations and personified brand culture as founding staff at SKIMS’ first retail location.</li>
+            <li>Facilitated omnichannel product launches that generated $1M in sales within the first 30 days of operation.</li>
+            <li>Implemented marketing initiatives that drove brand consistency and maximized customer conversion.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDIT THIS SECTION -->
+  <section id="education">
+    <div class="container">
+      <h2>Education</h2>
+      <div class="education-card">
+        <h3>Tulane University · A. B. Freeman School of Business</h3>
+        <p><strong>Degree:</strong> B.S. in Business (Marketing and Management)</p>
+        <p><strong>Dates:</strong> 2022 – 2026 (Expected graduation: 2026)</p>
+        <p><strong>Activities & Organizations:</strong> Phi Chi Theta Business Fraternity, American Marketing Association, Entertainment Business Network, Tulane Sports Business Conference, Newcomb-Tulane College Honors Scholar, Tulane Women’s Network, Alpha Epsilon Phi Sorority.</p>
+        <p><strong>Honors:</strong> Dean’s List (Spring 2024, Fall 2024, Spring 2025, Fall 2025)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDIT THIS SECTION -->
+  <section id="projects">
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <article class="project-card">
+          <h3>Product Launch Strategy</h3>
+          <p>
+            This case study outlines a product launch strategy built around audience positioning, timing, and integrated channel execution. I developed the core campaign structure, messaging direction, and tactical rollout plan to align brand goals with measurable outcomes. The result is a clear launch blueprint designed to drive awareness, engagement, and early adoption.
+          </p>
+          <div class="badges">
+            <span class="badge">Go-To-Market Strategy</span>
+            <span class="badge">Brand Positioning</span>
+            <span class="badge">Campaign Planning</span>
+          </div>
+          <div class="project-links">
+            <details>
+              <summary>View Projects</summary>
+              <ul>
+                <li><a href="https://github.com/zoekaufmann17/my-website/blob/main/Zoe%20Kaufmann%20Case%20Study%20(2).pdf" target="_blank" rel="noopener noreferrer">Product Launch Strategy (PDF)</a></li>
+              </ul>
+            </details>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <h3>Fragrance Launch Event</h3>
+          <p>
+            This project focuses on a fragrance launch concept for By Rosie Jane’s Matilda, combining event experience design with influencer-friendly storytelling. I planned the event flow, activation elements, and marketing touchpoints to support both in-person impact and digital amplification. The final concept emphasizes brand feel, shareability, and meaningful audience connection.
+          </p>
+          <div class="badges">
+            <span class="badge">Event Marketing</span>
+            <span class="badge">Influencer Strategy</span>
+            <span class="badge">Brand Experience</span>
+          </div>
+          <div class="project-links">
+            <details>
+              <summary>View Projects</summary>
+              <ul>
+                <li><a href="https://github.com/zoekaufmann17/my-website/blob/main/By_rosie%20jane%20Matilda%20Launch%20-%20Intern%20Project.pdf" target="_blank" rel="noopener noreferrer">Fragrance Launch Event (PDF)</a></li>
+              </ul>
+            </details>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDIT THIS SECTION -->
+  <section id="skills">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <article class="skill-group">
+          <h3>Technical Skills</h3>
+          <div class="skill-list">
+            <span class="skill-item">Campaign Planning</span>
+            <span class="skill-item">Brand Strategy</span>
+            <span class="skill-item">Market Research</span>
+            <span class="skill-item">Consumer Insights</span>
+            <span class="skill-item">Content Development</span>
+            <span class="skill-item">Social Media Marketing</span>
+            <span class="skill-item">Launch Strategy</span>
+            <span class="skill-item">Event Activation Planning</span>
+            <span class="skill-item">Influencer Marketing</span>
+          </div>
+        </article>
+
+        <article class="skill-group">
+          <h3>Soft Skills</h3>
+          <div class="skill-list">
+            <span class="skill-item">Communication</span>
+            <span class="skill-item">Collaboration</span>
+            <span class="skill-item">Creativity</span>
+            <span class="skill-item">Adaptability</span>
+            <span class="skill-item">Problem Solving</span>
+            <span class="skill-item">Organization</span>
+            <span class="skill-item">Detail Orientation</span>
+            <span class="skill-item">Leadership</span>
+            <span class="skill-item">Public Advocacy</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDIT THIS SECTION -->
+  <section id="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <div class="contact-card">
+        <p><strong>Email:</strong> <a href="mailto:zkaufmann@tulane.edu">zkaufmann@tulane.edu</a></p>
+        <p>
+          <a class="btn btn-primary" href="https://linkedin.com/in/zoe-kaufmann/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
+        </p>
+        <p>Passionate about future opportunities in brand strategy, and partnerships, and activations.</p>
+      </div>
+    </div>
+  </section>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+  <script>
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.16 });
+
+    sections.forEach((section) => observer.observe(section));
+
+    const backToTop = document.getElementById('backToTop');
+    const hero = document.getElementById('hero');
+
+    window.addEventListener('scroll', () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      document.body.style.setProperty('--bg-shift', progress.toFixed(4));
+      const show = window.scrollY > hero.offsetHeight * 0.75;
+      backToTop.classList.toggle('show', show);
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
