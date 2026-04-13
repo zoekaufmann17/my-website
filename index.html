@@ -22,10 +22,27 @@
       margin: 0;
       font-family: Inter, sans-serif;
       color: var(--color-text);
-      background: linear-gradient(120deg, #fff8f2, #fffdf8, #f6fff8, #f5f7ff);
-      background-size: 300% 300%;
-      animation: pastelShift 18s ease infinite;
+      background: var(--color-background);
       line-height: 1.6;
+      --bg-shift: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -12% -10%;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 22%, #ffd9cc99 0%, transparent 48%),
+        radial-gradient(circle at 84% 16%, #dcd5ff99 0%, transparent 45%),
+        radial-gradient(circle at 78% 74%, #c8f1dc99 0%, transparent 48%),
+        radial-gradient(circle at 18% 80%, #ffe8be99 0%, transparent 42%);
+      filter: blur(6px);
+      transform: translateY(calc(var(--bg-shift) * -70px));
+      transition: transform 120ms linear;
     }
 
     .container { width: min(1080px, 92%); margin: 0 auto; }
@@ -294,12 +311,6 @@
       50% { transform: translateY(7px); opacity: 1; }
     }
 
-    @keyframes pastelShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
     @media (max-width: 740px) {
       .nav-inner { flex-direction: column; align-items: flex-start; padding: 0.7rem 0; }
       .nav-links { gap: 0.7rem; }
@@ -326,7 +337,7 @@
   <section id="hero">
     <div class="container">
       <h1>Zoe Kaufmann</h1>
-      <p class="tagline">Aspiring Marketing Professional.</p>
+      <p class="tagline">Graduating Business Student & Aspiring Marketing Professional.</p>
       <div class="button-row">
         <a class="btn btn-primary" href="#projects">View My Work</a>
         <a class="btn btn-outline" href="https://github.com/zoekaufmann17/my-website/blob/main/Zoe%20Kaufmann%20Resume.pdf" target="_blank" rel="noopener noreferrer">Download Resume</a>
@@ -456,7 +467,6 @@
               <summary>View Projects</summary>
               <ul>
                 <li><a href="https://github.com/zoekaufmann17/my-website/blob/main/Zoe%20Kaufmann%20Case%20Study%20(2).pdf" target="_blank" rel="noopener noreferrer">Product Launch Strategy (PDF)</a></li>
-                <li><a href="https://linkedin.com/in/zoe-kaufmann/" target="_blank" rel="noopener noreferrer">Project Profile on LinkedIn</a></li>
               </ul>
             </details>
           </div>
@@ -477,7 +487,6 @@
               <summary>View Projects</summary>
               <ul>
                 <li><a href="https://github.com/zoekaufmann17/my-website/blob/main/By_rosie%20jane%20Matilda%20Launch%20-%20Intern%20Project.pdf" target="_blank" rel="noopener noreferrer">Fragrance Launch Event (PDF)</a></li>
-                <li><a href="https://linkedin.com/in/zoe-kaufmann/" target="_blank" rel="noopener noreferrer">Project Profile on LinkedIn</a></li>
               </ul>
             </details>
           </div>
@@ -533,7 +542,7 @@
         <p>
           <a class="btn btn-primary" href="https://linkedin.com/in/zoe-kaufmann/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
         </p>
-        <p>Open to all opportunities and connections.</p>
+        <p>Passionate about future opportunities in brand strategy, and partnerships, and activations.</p>
       </div>
     </div>
   </section>
@@ -554,6 +563,9 @@
     const hero = document.getElementById('hero');
 
     window.addEventListener('scroll', () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      document.body.style.setProperty('--bg-shift', progress.toFixed(4));
       const show = window.scrollY > hero.offsetHeight * 0.75;
       backToTop.classList.toggle('show', show);
     });
