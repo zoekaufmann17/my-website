@@ -317,6 +317,17 @@
     .project-links a:hover { text-decoration: underline; }
 
     .contact-card { text-align: center; }
+    .footer {
+      border-top: 1px solid #00000014;
+      padding: 1.6rem 0 2rem;
+      text-align: center;
+      color: #6d6059;
+      background: color-mix(in srgb, var(--color-background) 92%, white);
+    }
+    .footer p {
+      margin: 0.25rem 0;
+      font-size: 0.92rem;
+    }
 
     .back-to-top {
       position: fixed;
@@ -374,10 +385,10 @@
       <div class="hero-layout">
         <div class="hero-copy">
           <h1>Zoe Kaufmann</h1>
-          <p class="tagline">Graduating Business Student & Aspiring Marketing Professional.</p>
+          <p class="tagline">Aspiring Marketing Professional.</p>
           <div class="button-row">
             <a class="btn btn-primary" href="#projects">View My Work</a>
-            <a class="btn btn-outline" href="https://github.com/zoekaufmann17/my-website/blob/main/Zoe%20Kaufmann%20Resume.pdf" target="_blank" rel="noopener noreferrer">Download Resume</a>
+            <a class="btn btn-outline" href="resume.pdf" download="resume.pdf">Download Resume</a>
           </div>
         </div>
         <!-- EDIT THIS SECTION: Replace image source if your headshot filename/path changes -->
@@ -513,7 +524,8 @@
             <details>
               <summary>View Projects</summary>
               <ul>
-                <li><a href="https://github.com/zoekaufmann17/my-website/blob/main/Zoe%20Kaufmann%20Case%20Study%20(2).pdf" target="_blank" rel="noopener noreferrer">Product Launch Strategy (PDF)</a></li>
+                <li><a href="product-launch-strategy.pdf" download="product-launch-strategy.pdf">Product Launch Strategy (PDF)</a></li>
+                <li><a href="https://linkedin.com/in/zoe-kaufmann/" target="_blank" rel="noopener noreferrer">Project Profile on LinkedIn</a></li>
               </ul>
             </details>
           </div>
@@ -533,7 +545,8 @@
             <details>
               <summary>View Projects</summary>
               <ul>
-                <li><a href="https://github.com/zoekaufmann17/my-website/blob/main/By_rosie%20jane%20Matilda%20Launch%20-%20Intern%20Project.pdf" target="_blank" rel="noopener noreferrer">Fragrance Launch Event (PDF)</a></li>
+                <li><a href="fragrance-launch-event.pdf" download="fragrance-launch-event.pdf">Fragrance Launch Event (PDF)</a></li>
+                <li><a href="https://linkedin.com/in/zoe-kaufmann/" target="_blank" rel="noopener noreferrer">Project Profile on LinkedIn</a></li>
               </ul>
             </details>
           </div>
@@ -585,14 +598,21 @@
     <div class="container">
       <h2>Contact</h2>
       <div class="contact-card">
-        <p><strong>Email:</strong> <a href="mailto:zkaufmann@tulane.edu">zkaufmann@tulane.edu</a></p>
-        <p>
+        <p>Open to all opportunities and connections.</p>
+        <div class="button-row">
+          <a class="btn btn-outline" href="mailto:zkaufmann@tulane.edu" target="_blank" rel="noopener noreferrer">Send Me an Email</a>
           <a class="btn btn-primary" href="https://linkedin.com/in/zoe-kaufmann/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
-        </p>
-        <p>Passionate about future opportunities in brand strategy, and partnerships, and activations.</p>
+        </div>
       </div>
     </div>
   </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="currentYear"></span> Zoe Kaufmann</p>
+      <p>Built with the help of AI tools.</p>
+    </div>
+  </footer>
 
   <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
@@ -608,6 +628,8 @@
 
     const backToTop = document.getElementById('backToTop');
     const hero = document.getElementById('hero');
+    const currentYear = document.getElementById('currentYear');
+    currentYear.textContent = new Date().getFullYear();
 
     window.addEventListener('scroll', () => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
